@@ -67,7 +67,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,6 +80,8 @@ TEMPLATES = [
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+FRONTEND_URL = "http://localhost:3000"
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
@@ -178,8 +180,20 @@ EMAIL_PORT = 2525
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-DEFAULT_FROM_EMAIL = 'noreply@yourapp.com'
+DEFAULT_FROM_EMAIL = 'noreply@auth.com'
 
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*']
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+REST_AUTH_REGISTER_PERMISSION_CLASSES = [
+    'rest_framework.permissions.AllowAny',
+]
+
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'users.serializers.LoginSerializer',
+}
+
+ACCOUNT_ADAPTER = 'users.adapter.CustomAccountAdapter'
