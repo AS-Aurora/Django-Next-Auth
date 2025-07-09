@@ -4,6 +4,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
+from users.serializers import UserSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class LoginView(APIView):
     def post(self, request):
@@ -17,13 +21,15 @@ class LoginView(APIView):
 
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)
-        response = Response({'detail': 'Login successful'})
+        user_data = UserSerializer(user).data
+
+        response = Response({'detail': 'Login successful', 'user': user_data})
 
         response.set_cookie(
             key='access_token',
             value=access,
             httponly=True,
-            secure=True,
+            secure=True,  # Set to True in production
             samesite='Lax',
         )
 
@@ -31,8 +37,16 @@ class LoginView(APIView):
             key='refresh_token',
             value=str(refresh),
             httponly=True,
-            secure=True,
+            secure=True,  # Set to True in production
             samesite='Lax',
         )
 
         return response
+        
+class HomeView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        return Response({
+            'email': request.user.email,
+            'username': request.user.username,
+        })
