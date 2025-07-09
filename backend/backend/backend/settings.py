@@ -181,10 +181,12 @@ EMAIL_USE_SSL = False
 
 DEFAULT_FROM_EMAIL = 'noreply@auth.com'
 
-ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*']
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_SIGNUP_FIELDS = ['username*','email*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 REST_AUTH_REGISTER_PERMISSION_CLASSES = [
@@ -193,7 +195,6 @@ REST_AUTH_REGISTER_PERMISSION_CLASSES = [
 
 REST_AUTH_SERIALIZERS = {
     'LOGIN_SERIALIZER': 'users.serializers.LoginSerializer',
-    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
 }
 
 ACCOUNT_ADAPTER = 'users.adapter.CustomAccountAdapter'

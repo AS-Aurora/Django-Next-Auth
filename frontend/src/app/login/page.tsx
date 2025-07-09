@@ -7,7 +7,7 @@ import axios from "axios";
 export default function LoginPage() {
   const router = useRouter();
   const [user, setUser] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const [errorData, setErrorData] = useState<any>(null);
@@ -30,7 +30,7 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    if (user.email.length > 0 && user.password.length > 0) {
+    if (user.username.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
@@ -46,16 +46,16 @@ export default function LoginPage() {
 
         <div className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-              Email
+            <label htmlFor="username" className="block text-sm font-medium text-gray-600">
+              Username
             </label>
             <input
-              id="email"
-              type="email"
-              value={user.email}
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              id="username"
+              type="text"
+              value={user.username}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
               className="mt-1 w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-              placeholder="Enter your email address"
+              placeholder="Enter your username"
             />
           </div>
 
