@@ -95,9 +95,21 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,                  # Generates new refresh token on login
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'UPDATE_LAST_LOGIN': True,
 }
 
-
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'jwt-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'jwt-refresh-token',
+    'JWT_AUTH_HTTPONLY': False,  # Set to False for testing
+    'JWT_AUTH_SECURE': False,    # Set to False for development
+    'JWT_AUTH_SAMESITE': 'Lax',
+    'PASSWORD_RESET_USE_SITES_DOMAIN': False,  # Don't use sites domain
+    'PASSWORD_RESET_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetSerializer',
+}
+    
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -157,8 +169,17 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_USER = '8e2621dcdca06f'
 
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = '772dad8dbc154e'
 
-EMAIL_PORT = '2525'
+EMAIL_PORT = 2525
+
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+DEFAULT_FROM_EMAIL = 'noreply@yourapp.com'
+
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*']
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
