@@ -9,6 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
   const [errorData, setErrorData] = useState<any>(null);
+  const [refresh, setRefresh] = useState<string | null>(null);
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/auth/user/", {
@@ -29,6 +30,19 @@ export default function Home() {
     return <div className="flex items-center justify-center h-screen text-xl">Loading...</div>;
   }
 
+  const handleLogout = () => {
+    axios.post("http://localhost:8000/api/auth/logout/", {"refresh": refresh}, {
+      withCredentials: true,
+    })
+    .then(() => {
+      router.push("/login");
+    })
+    .catch((err) => {
+      console.error("Logout error:", err);
+      setErrorData(err?.response?.data);
+    });
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-3xl font-bold">Welcome, {userData?.username || "User"}!</h1>
@@ -39,6 +53,12 @@ export default function Home() {
           <p>Error: {errorData.detail || "An error occurred."}</p>
         </div>
       )}
+
+      <div>
+        <button onClick={handleLogout} className="mt-4 p-2 bg-red-600 text-white rounded-md">
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

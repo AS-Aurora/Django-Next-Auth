@@ -15,10 +15,8 @@ class CustomAccountAdapter(DefaultAccountAdapter):
             "key": emailconfirmation.key,
         }
 
-        # Render and debug
         message = render_to_string("account/email/email_confirmation_message.txt", ctx)
         subject = render_to_string("account/email/email_confirmation_subject.txt", ctx).strip()
-        print("Rendered message:\n", message)  # Debug print
 
         email = EmailMessage(subject, message, to=[user.email])
         email.send()

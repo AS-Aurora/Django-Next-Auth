@@ -27,7 +27,7 @@ class LoginView(APIView):
             key='access_token',
             value=access,
             httponly=True,
-            secure=True,  # Set to True in production
+            secure=True,
             samesite='Lax',
         )
 
@@ -35,7 +35,7 @@ class LoginView(APIView):
             key='refresh_token',
             value=str(refresh),
             httponly=True,
-            secure=True,  # Set to True in production
+            secure=True,
             samesite='Lax',
         )
 

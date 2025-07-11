@@ -90,9 +90,6 @@ export default function LoginPage() {
           <Link href="/signup" className="hover:underline text-blue-600">
             Don't have an account? Sign Up
           </Link>
-          <Link href="/forgot-password" className="hover:underline text-blue-600">
-            Forgot Password?
-          </Link>
         </div>
 
       {errorData && (
