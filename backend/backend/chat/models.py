@@ -16,7 +16,7 @@ class Message(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.email} - {self.content[:20]}"
+        return f"{self.user.email} - {self.body[:20]}"
 
     class Meta:
         ordering = ['-timestamp']

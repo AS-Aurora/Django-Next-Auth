@@ -112,6 +112,15 @@ REST_AUTH = {
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,  # Don't use sites domain
     'PASSWORD_RESET_SERIALIZER': 'dj_rest_auth.serializers.PasswordResetSerializer',
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],  # or 6380 if you're using a custom port
+        },
+    },
+}
     
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

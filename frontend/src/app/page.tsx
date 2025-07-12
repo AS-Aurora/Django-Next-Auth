@@ -28,28 +28,31 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8000/ws/chat/sc/");
+  const socket = new WebSocket("ws://localhost:8000/ws/chat/sc/");
 
-    socket.onopen = () => {
-      console.log("WebSocket connection established");
-      socket.send(JSON.stringify({ message: "Hello from Next.js client!" }));
-    };
+  socket.onopen = () => {
+    console.log("WebSocket connection established");
+    socket.send(JSON.stringify({ 
+      message: "Hello from Next.js client!",
+      username: userData?.username || "Anonymous"
+    }))
+  }
 
-    socket.onmessage = (e) => {
-      console.log("WebSocket is receiving message from server now.", e);
-      const data = JSON.parse(e.data);
-      console.log("WebSocket message received:", data.message);
-    };
+  socket.onmessage = (e) => {
+    console.log("WebSocket is receiving message from server now.", e)
+    const data = JSON.parse(e.data)
+    console.log("WebSocket message received:", data.message)
+  }
 
-    socket.onerror = (e) => {
-      console.error("WebSocket error:", e);
-    };
+  socket.onerror = (e) => {
+    console.error("WebSocket error:", e)
+  }
 
-    return () => {
-      socket.close();
-      console.log("WebSocket connection closed");
-    };
-  }, []);
+  return () => {
+    socket.close();
+    console.log("WebSocket connection closed")
+  };
+}, [userData])
 
   if (loading) {
     return (
